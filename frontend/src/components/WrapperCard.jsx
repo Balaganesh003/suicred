@@ -13,7 +13,7 @@ export function WrapperCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-gray-600 to-gray-900 rounded-3xl p-8 shadow-2xl max-w-2xl w-full mx-auto text-white overflow-hidden relative">
+      className="bg-gradient-to-br from-gray-600 to-gray-900 rounded-2xl p-8 shadow-2xl max-w-2xl w-full mx-auto text-white overflow-hidden relative">
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -21,7 +21,7 @@ export function WrapperCard({
         className="absolute top-4 right-4 text-yellow-300">
         <Sparkles size={24} />
       </motion.div>
-      <h2 className="text-3xl font-bold mb-6">Your Sui Wrapped Summary</h2>
+      <h2 className="text-3xl font-bold mb-6 text-white">Your Sui Wrapped Summary</h2>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
