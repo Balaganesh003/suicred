@@ -1,10 +1,17 @@
-import Navbar from '../components/Navbar';
-import { WrapperCard } from '../components/WrapperCard';
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useCurrentAccount } from '@mysten/dapp-kit';
-import { fetchAccountAge, fetchBalance, fetchNoOfTransactions, fetchNumberOfContracts, fetchTotalVolume, fetchUniqueCounterParties } from '../scripts/data';
+import Navbar from "../components/Navbar";
+import { WrapperCard } from "../components/WrapperCard";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import {
+  fetchAccountAge,
+  fetchBalance,
+  fetchNoOfTransactions,
+  fetchNumberOfContracts,
+  fetchTotalVolume,
+  fetchUniqueCounterParties,
+} from "../scripts/data";
 
 export default function WrapperPage({ walletId, setWalletId }) {
   const [statsData, setStatsData] = useState({
@@ -14,10 +21,10 @@ export default function WrapperPage({ walletId, setWalletId }) {
     numberOfContracts: 0,
     totalVolume: 0,
     uniqueCounterParties: 0,
-    summary: '',
+    summary: "",
   });
   const [isLoading, setIsLoading] = useState(true);
-  const account = useCurrentAccount()
+  const account = useCurrentAccount();
 
   useEffect(() => {
     if (!walletId && account) {
@@ -49,16 +56,16 @@ export default function WrapperPage({ walletId, setWalletId }) {
         ]);
 
         setStatsData({
-          accountAge : Math.floor(accountAge * 1000),
+          accountAge: Math.floor(accountAge * 1000),
           balance: Number(balance.totalBalance) / 1_000_000_000,
           noOfTransactions,
           numberOfContracts,
           totalVolume,
           uniqueCounterParties,
-          summary: '', // Initialize summary
+          summary: "", // Initialize summary
         });
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       } finally {
         setIsLoading(false); // End loading animation
       }
@@ -69,21 +76,23 @@ export default function WrapperPage({ walletId, setWalletId }) {
 
   const getReputation = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/update_data', {
-        account_data: statsData, // Properly nest the data
-      });
-  
+      const response = await axios.post(
+        "https://suicred.onrender.com/update_data",
+        {
+          account_data: statsData, // Properly nest the data
+        },
+      );
+
       const data = response.data;
-  
+
       setStatsData((prev) => ({
         ...prev,
         summary: data.summary, // Update summary
       }));
     } catch (error) {
-      console.error('Error fetching reputation:', error);
+      console.error("Error fetching reputation:", error);
     }
   };
-  
 
   useEffect(() => {
     if (statsData.balance > 0) {
