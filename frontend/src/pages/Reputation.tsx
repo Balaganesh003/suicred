@@ -11,6 +11,8 @@ import { useEnokiFlow, useZkLogin, useZkLoginSession } from "@mysten/enoki/react
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Transaction } from '@mysten/sui/transactions';
+import {Activity} from 'react-lucide'
+import { AlertCircle, Activity, DollarSign, TrendingDown, MinusCircle } from 'lucide-react';
 
 export default function ReputationPage({
   walletId,
@@ -187,8 +189,8 @@ export default function ReputationPage({
     {
       title: 'Wallet age',
       description: 'Wallet age (from the first transaction)',
-      value: statsData.accountAge,
-      unit: 'months',
+      value: Math.floor(statsData.accountAge * 1000 ),
+      unit: 'days',
     },
     {
       title: 'Total transactions',
@@ -215,17 +217,13 @@ export default function ReputationPage({
                 <CircularProgress value={reputation} maxValue={100} />
               </HighlightCard>
               <HighlightCard
-                title="Little Activity"
-                description="This wallet has total spendings of less than $1"
-              >
-                <div className="w-16 h-16 relative">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Activity Icon"
-                    className="rounded-full"
-                  />
-                </div>
-              </HighlightCard>
+  title="Little Activity"
+  description="This wallet has total spendings of less than $1"
+>
+  <div className="w-16 h-16 flex justify-center items-center rounded-full bg-gray-700">
+    <TrendingDown size={32} color="#e53e3e" />
+  </div>
+</HighlightCard>
              
               <HighlightCard
   title="Mint Reputation"
