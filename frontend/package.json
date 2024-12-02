@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mysten/dapp-kit": "0.14.40",
+    "@mysten/dapp-kit": "0.14.39",
     "@mysten/enoki": "^0.4.14",
     "@mysten/sui": "1.16.0",
     "@radix-ui/colors": "^3.0.0",
