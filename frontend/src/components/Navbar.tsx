@@ -12,7 +12,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a href="/" className="text-xl font-bold text-white tracking-wide">
-            Web3 Dashboard
+            Sui Cred
           </a>
 
           {/* Navigation Buttons */}

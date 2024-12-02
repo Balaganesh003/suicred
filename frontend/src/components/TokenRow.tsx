@@ -11,7 +11,7 @@ export function TokenRow({ symbol, balance, value, iconUrl }: { symbol: string, 
           </div>
         </div>
         <div className="text-right">
-          <p className="font-semibold text-white">${value.toFixed(2)}</p>
+          <p className="font-semibold text-white">{balance}</p>
         </div>
       </div>
     );

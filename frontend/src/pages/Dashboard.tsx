@@ -49,7 +49,7 @@ export default function Dashboard({ walletId, setWalletId }: { walletId: string,
     },
     {
       icon: <Globe className="text-blue-400" />,
-      title: 'Become Part of Web3',
+      title: 'Become Part of Sui',
       description:
         "Engage in the decentralized internet's economy to leverage its opportunities.",
     },
@@ -79,8 +79,7 @@ export default function Dashboard({ walletId, setWalletId }: { walletId: string,
       </div>
       <main className="w-full max-w-[1080px] mx-auto px-4 md:px-4 pt-24">
         <header>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-gray-300 mt-2">
+          <p className="text-gray-300 mt-2 text-xl">
             Connected Wallet: {walletId || 'No wallet connected'}
           </p>
         </header>

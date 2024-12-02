@@ -260,7 +260,7 @@ export default function ReputationPage({
               <TokenRow
                 symbol="SUI"
                 balance={statsData.balance}
-                value={statsData.balance * 2000}
+                value={statsData.balance}
                 iconUrl="/placeholder.svg"
               />
             </div>

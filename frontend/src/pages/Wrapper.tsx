@@ -70,18 +70,20 @@ export default function WrapperPage({ walletId, setWalletId }) {
   const getReputation = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/update_data', {
-        account_data: statsData,
+        account_data: statsData, // Properly nest the data
       });
-
+  
       const data = response.data;
+  
       setStatsData((prev) => ({
         ...prev,
-        summary: data.summary,
+        summary: data.summary, // Update summary
       }));
     } catch (error) {
       console.error('Error fetching reputation:', error);
     }
   };
+  
 
   useEffect(() => {
     if (statsData.balance > 0) {
@@ -92,13 +94,13 @@ export default function WrapperPage({ walletId, setWalletId }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-gray-800">
       <Navbar />
-      <main className="container mx-auto px-4 pt-24">
+      <main className="container mx-auto px-6 pt-24">
         <div className="relative">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-center mb-12 text-gray-200"
+            className="text-5xl font-bold text-center mb-14 text-gray-200"
           >
             Your Web3 Wrapped
           </motion.h1>
