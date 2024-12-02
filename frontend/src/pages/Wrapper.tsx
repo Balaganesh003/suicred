@@ -49,7 +49,7 @@ export default function WrapperPage({ walletId, setWalletId }) {
         ]);
 
         setStatsData({
-          accountAge,
+          accountAge : Math.floor(accountAge * 1000),
           balance: Number(balance.totalBalance) / 1_000_000_000,
           noOfTransactions,
           numberOfContracts,

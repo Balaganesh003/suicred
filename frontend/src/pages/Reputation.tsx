@@ -168,12 +168,12 @@ export default function ReputationPage({
       title: 'Wallet turnover',
       description: 'The movement of funds on the wallet',
       value: statsData.totalVolume,
-      unit: 'ETH',
+      unit: 'SUI',
     },
     {
       title: 'Wallet turnover USD',
       description: 'The movement of funds on the wallet',
-      value: statsData.totalVolume * 2000, // Example USD conversion, adjust as needed
+      value: (statsData.totalVolume * 2000).toFixed(2), // Example USD conversion, adjust as needed
       unit: 'USD',
     },
    
@@ -181,7 +181,7 @@ export default function ReputationPage({
     {
       title: 'Wallet age',
       description: 'Wallet age (from the first transaction)',
-      value: Math.floor(statsData.accountAge * 10000),
+      value: Math.floor(statsData.accountAge * 1000),
       unit: 'days',
     },
     {
@@ -192,7 +192,7 @@ export default function ReputationPage({
     },
     {
       title : 'Unique Counter Parties',
-      description : '',
+      description : 'Unique Counter Parties on the wallet',
       value: statsData.uniqueCounterParties,
       unit: ''
     }
@@ -209,7 +209,7 @@ export default function ReputationPage({
             <h2 className="text-3xl font-bold mb-6">Highlights</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <HighlightCard
-                title="Nomis Scroll Score"
+                title="Reputation Score"
                 description="The overall Scroll score is 0.00/100"
                 className="bg-red-900/20"
               >
@@ -254,7 +254,7 @@ export default function ReputationPage({
           <section className="py-8">
             <div className="flex items-baseline gap-3 mb-6">
               <h2 className="text-3xl font-bold">Tokens</h2>
-              <span className="text-green-400 text-2xl font-semibold">${statsData.balance * 2000}</span>
+              {/* <span className="text-green-400 text-2xl font-semibold">${statsData.balance * 2000}</span> */}
             </div>
             <div className="space-y-4">
               <TokenRow
