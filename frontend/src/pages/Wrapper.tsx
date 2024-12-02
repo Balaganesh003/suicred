@@ -12,7 +12,7 @@ export default function WrapperPage() {
   };
 
   return (
-    <div className="min-h-screen[ansparent_100%)] bg-_lack_at_t-w_0,">_0,_] bg-black text-white"
+    <div className="min-h-screen[ansparent_100%)] bg-_lack_at_t-w_0,">
       <Navbar />
       <main className="container mx-auto px-4 pt-24">
         <div className="relative">
@@ -24,12 +24,6 @@ export default function WrapperPage() {
           >
             Your Web3 Wrapped
           </motion.h1>
-
-          {/* Sparkle effect */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 left-0 animate-ping w-3 h-3 bg-white rounded-full opacity-75"></div>
-            <div className="absolute bottom-0 right-0 animate-ping w-4 h-4 bg-white rounded-full opacity-75"></div>
-          </div>
         </div>
         <WrapperCard {...wrapperData} />
         <motion.p

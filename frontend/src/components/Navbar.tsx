@@ -1,6 +1,11 @@
 import { ConnectButton } from "@mysten/dapp-kit";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+
+  const navigate = useNavigate();
+
+
   return (
     <nav className="fixed top-0 w-full bg-black/30 backdrop-blur-md border-b border-gray-800 z-50 shadow-lg">
       <div className="container mx-auto px-4">
@@ -13,14 +18,26 @@ export default function Navbar() {
           {/* Navigation Buttons */}
           <div className="flex items-center gap-6">
             {/* Dashboard Button */}
-            <button className="text-gray-300 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
+            <button
+              onClick={() => navigate('/dashboard')}
+             className="text-gray-300 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
               Dashboard
             </button>
 
-            {/* Profile Button */}
-            <button className="text-gray-300 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
-              Profile
+            <button
+              onClick={() => navigate('/dashboard/reputation')}
+             className="text-gray-300 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
+              Reputation
             </button>
+
+            {/* Profile Button */}
+            <button
+              onClick={() => navigate('/dashboard/wrapper')}
+             className="text-gray-300 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
+              Wrapper
+            </button>
+
+           
 
             {/* Connect Wallet Button */}
             <ConnectButton />
