@@ -1,20 +1,36 @@
-import Navbar from '../components/Navbar';
-import { CircularProgress } from '../components/CircularProgress';
-import { HighlightCard } from '../components/HighlightCard';
-import { TokenRow } from '../components/TokenRow';
-import { StatCard } from '../components/StatCard';
-import { fetchAccountAge, fetchBalance, fetchNoOfTransactions, fetchNumberOfContracts, fetchTotalVolume, fetchUniqueCounterParties } from '../scripts/data';
-import { useEffect, useState } from 'react';
-import { useCurrentAccount } from '@mysten/dapp-kit';
-import { useSignAndExecuteTransaction } from '@mysten/dapp-kit';
-import { useEnokiFlow, useZkLogin, useZkLoginSession } from "@mysten/enoki/react";
-import toast from 'react-hot-toast';
-import axios from 'axios';
-import { Transaction } from '@mysten/sui/transactions';
-import { AlertCircle, Activity, DollarSign, TrendingDown, MinusCircle } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
-import { ThreeDots } from 'react-loader-spinner'; 
-
+import Navbar from "../components/Navbar";
+import { CircularProgress } from "../components/CircularProgress";
+import { HighlightCard } from "../components/HighlightCard";
+import { TokenRow } from "../components/TokenRow";
+import { StatCard } from "../components/StatCard";
+import {
+  fetchAccountAge,
+  fetchBalance,
+  fetchNoOfTransactions,
+  fetchNumberOfContracts,
+  fetchTotalVolume,
+  fetchUniqueCounterParties,
+} from "../scripts/data";
+import { useEffect, useState } from "react";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import {
+  useEnokiFlow,
+  useZkLogin,
+  useZkLoginSession,
+} from "@mysten/enoki/react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { Transaction } from "@mysten/sui/transactions";
+import {
+  AlertCircle,
+  Activity,
+  DollarSign,
+  TrendingDown,
+  MinusCircle,
+} from "lucide-react";
+import { Toaster } from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function ReputationPage({
   walletId,
@@ -36,7 +52,8 @@ export default function ReputationPage({
   const [loading, setLoading] = useState(true);
   const [isMinted, setIsMinted] = useState<boolean>(false);
   const account = useCurrentAccount();
-  const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction();
+  const { mutateAsync: signAndExecuteTransaction } =
+    useSignAndExecuteTransaction();
   const { address } = useZkLogin();
 
   useEffect(() => {
@@ -68,14 +85,14 @@ export default function ReputationPage({
 
           setStatsData({
             accountAge,
-            balance: Number(balance.totalBalance) / 1_000_000_000, 
+            balance: Number(balance.totalBalance) / 1_000_000_000,
             noOfTransactions,
             numberOfContracts,
             totalVolume,
             uniqueCounterParties,
           });
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error("Error fetching data:", error);
         } finally {
           setLoading(false);
         }
@@ -85,7 +102,8 @@ export default function ReputationPage({
     }
   }, [walletId]);
 
-  const testnet_reputation = "0x8bde90c7f3b2d139a44092afdbe4aa96b1f690976d6c2b25278daff51eb39e5e";
+  const testnet_reputation =
+    "0x8bde90c7f3b2d139a44092afdbe4aa96b1f690976d6c2b25278daff51eb39e5e";
 
   const mintSuiReputation = async () => {
     if (!account) {
@@ -97,10 +115,7 @@ export default function ReputationPage({
     const tx = new Transaction();
     tx.moveCall({
       target: `${testnet_reputation}::reputation_card::mint_reputation`,
-      arguments: [
-        tx.pure.address(account.address),
-        tx.pure.u64(Date.now()),
-      ],
+      arguments: [tx.pure.address(account.address), tx.pure.u64(Date.now())],
     });
     tx.setSender(address!);
 
@@ -114,7 +129,7 @@ export default function ReputationPage({
           onClick={() =>
             window.open(
               `https://suiscan.xyz/account/object/${account.address}`,
-              "_blank"
+              "_blank",
             )
           }
         >
@@ -129,16 +144,19 @@ export default function ReputationPage({
 
   const getReputation = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/update_data', {
-        "account_data": statsData
-      });
+      const response = await axios.post(
+        "https://suicred.onrender.com/update_data",
+        {
+          account_data: statsData,
+        },
+      );
 
       const data = response.data;
       console.log(data.reputation_score);
       console.log(data.summary);
       setReputation(data.reputation_score);
     } catch (error) {
-      console.error('Error fetching reputation:', error);
+      console.error("Error fetching reputation:", error);
     }
   };
 
@@ -151,57 +169,54 @@ export default function ReputationPage({
   // Construct the stats array dynamically using statsData
   const stats = [
     {
-      title: 'Deployed contracts',
-      description: 'Amount of deployed smart-contracts',
+      title: "Deployed contracts",
+      description: "Amount of deployed smart-contracts",
       value: statsData.numberOfContracts,
-      unit: '',
+      unit: "",
     },
     {
-      title: 'Native balance',
-      description: 'Wallet native token balance',
-      value: statsData.balance ,
-      unit: 'SUI',
+      title: "Native balance",
+      description: "Wallet native token balance",
+      value: statsData.balance,
+      unit: "SUI",
     },
-   
-    
+
     {
-      title: 'Wallet turnover',
-      description: 'The movement of funds on the wallet',
+      title: "Wallet turnover",
+      description: "The movement of funds on the wallet",
       value: statsData.totalVolume,
-      unit: 'SUI',
+      unit: "SUI",
     },
     {
-      title: 'Wallet turnover USD',
-      description: 'The movement of funds on the wallet',
+      title: "Wallet turnover USD",
+      description: "The movement of funds on the wallet",
       value: (statsData.totalVolume * 2000).toFixed(2), // Example USD conversion, adjust as needed
-      unit: 'USD',
+      unit: "USD",
     },
-   
- 
+
     {
-      title: 'Wallet age',
-      description: 'Wallet age (from the first transaction)',
+      title: "Wallet age",
+      description: "Wallet age (from the first transaction)",
       value: Math.floor(statsData.accountAge * 1000),
-      unit: 'days',
+      unit: "days",
     },
     {
-      title: 'Total transactions',
-      description: 'Total transactions on wallet',
+      title: "Total transactions",
+      description: "Total transactions on wallet",
       value: statsData.noOfTransactions,
-      unit: '',
+      unit: "",
     },
     {
-      title : 'Unique Counter Parties',
-      description : 'Unique Counter Parties on the wallet',
+      title: "Unique Counter Parties",
+      description: "Unique Counter Parties on the wallet",
       value: statsData.uniqueCounterParties,
-      unit: ''
-    }
-  
+      unit: "",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-black text-white ">
-      <Toaster/>
+      <Toaster />
       <Navbar />
       {!loading ? (
         <main className="container mx-auto px-4 pt-24 max-w-[1080px]">
@@ -216,38 +231,38 @@ export default function ReputationPage({
                 <CircularProgress value={reputation} maxValue={100} />
               </HighlightCard>
               <HighlightCard
-  title="Little Activity"
-  description="This wallet has total spendings of less than $1"
->
-  <div className="w-16 h-16 flex justify-center items-center rounded-full bg-gray-700">
-    <TrendingDown size={32} color="#e53e3e" />
-  </div>
-</HighlightCard>
-             
-              <HighlightCard
-  title="Mint Reputation"
-  className="shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg"
->
-  <div className="h-16 flex items-center">
-    <div className="relative w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-    <div className="absolute top-0 left-0 h-full bg-gray-200 rounded-full animate-pulse" style={{ width: `${Math.round(Number(reputation))}%` }} />
-    </div>
-    <div className="ml-4 text-sm text-white font-semibold">
-      <span>{reputation}% Active</span>
-    </div>
-  </div>
-  <div className="mt-4">
-  <button
-  onClick={mintSuiReputation}
-  className="text-gray-100 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20">
-  Generate Reputation
-</button>
-
-  </div>
+                title="Little Activity"
+                description="This wallet has total spendings of less than $1"
+              >
+                <div className="w-16 h-16 flex justify-center items-center rounded-full bg-gray-700">
+                  <TrendingDown size={32} color="#e53e3e" />
+                </div>
               </HighlightCard>
 
-
-           
+              <HighlightCard
+                title="Mint Reputation"
+                className="shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg"
+              >
+                <div className="h-16 flex items-center">
+                  <div className="relative w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div
+                      className="absolute top-0 left-0 h-full bg-gray-200 rounded-full animate-pulse"
+                      style={{ width: `${Math.round(Number(reputation))}%` }}
+                    />
+                  </div>
+                  <div className="ml-4 text-sm text-white font-semibold">
+                    <span>{reputation}% Active</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <button
+                    onClick={mintSuiReputation}
+                    className="text-gray-100 hover:text-white px-6 py-2 transition-all duration-200 rounded-md bg-white/10 hover:bg-white/20"
+                  >
+                    Generate Reputation
+                  </button>
+                </div>
+              </HighlightCard>
             </div>
           </section>
 
@@ -283,7 +298,12 @@ export default function ReputationPage({
         </main>
       ) : (
         <div className="flex justify-center items-center h-full min-h-screen">
-          <ThreeDots height="100" width="150" color="#ffffff" ariaLabel="loading" />
+          <ThreeDots
+            height="100"
+            width="150"
+            color="#ffffff"
+            ariaLabel="loading"
+          />
         </div>
       )}
     </div>
