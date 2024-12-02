@@ -11,8 +11,10 @@ import { useEnokiFlow, useZkLogin, useZkLoginSession } from "@mysten/enoki/react
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Transaction } from '@mysten/sui/transactions';
-import {Activity} from 'react-lucide'
 import { AlertCircle, Activity, DollarSign, TrendingDown, MinusCircle } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
+import { ThreeDots } from 'react-loader-spinner'; 
+
 
 export default function ReputationPage({
   walletId,
@@ -152,26 +154,16 @@ export default function ReputationPage({
       title: 'Deployed contracts',
       description: 'Amount of deployed smart-contracts',
       value: statsData.numberOfContracts,
-      unit: 'ETH',
+      unit: '',
     },
     {
       title: 'Native balance',
       description: 'Wallet native token balance',
-      value: statsData.balance,
-      unit: 'ETH',
+      value: statsData.balance ,
+      unit: 'SUI',
     },
-    {
-      title: 'Native balance USD',
-      description: 'Wallet native token balance',
-      value: statsData.balance * 2000, // Example USD conversion, adjust as needed
-      unit: 'USD',
-    },
-    {
-      title: 'Hold tokens balance USD',
-      description: 'Wallet hold tokens total balance',
-      value: 0, // Replace with real data if available
-      unit: 'USD',
-    },
+   
+    
     {
       title: 'Wallet turnover',
       description: 'The movement of funds on the wallet',
@@ -189,7 +181,7 @@ export default function ReputationPage({
     {
       title: 'Wallet age',
       description: 'Wallet age (from the first transaction)',
-      value: Math.floor(statsData.accountAge * 1000 ),
+      value: Math.floor(statsData.accountAge * 10000),
       unit: 'days',
     },
     {
@@ -198,13 +190,20 @@ export default function ReputationPage({
       value: statsData.noOfTransactions,
       unit: '',
     },
+    {
+      title : 'Unique Counter Parties',
+      description : '',
+      value: statsData.uniqueCounterParties,
+      unit: ''
+    }
   
   ];
 
   return (
     <div className="min-h-screen bg-black text-white ">
+      <Toaster/>
       <Navbar />
-      {!loading && (
+      {!loading ? (
         <main className="container mx-auto px-4 pt-24 max-w-[1080px]">
           <section className="py-8">
             <h2 className="text-3xl font-bold mb-6">Highlights</h2>
@@ -259,7 +258,7 @@ export default function ReputationPage({
             </div>
             <div className="space-y-4">
               <TokenRow
-                symbol="ETH"
+                symbol="SUI"
                 balance={statsData.balance}
                 value={statsData.balance * 2000}
                 iconUrl="/placeholder.svg"
@@ -282,6 +281,10 @@ export default function ReputationPage({
             </div>
           </section>
         </main>
+      ) : (
+        <div className="flex justify-center items-center h-full min-h-screen">
+          <ThreeDots height="100" width="150" color="#ffffff" ariaLabel="loading" />
+        </div>
       )}
     </div>
   );
