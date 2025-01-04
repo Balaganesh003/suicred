@@ -111,7 +111,5 @@ Ensure you have a **Sui wallet** to interact with the Sui blockchain. You'll nee
 - Your **Reputation Score** will be displayed along with a **Dynamic NFT**.
 - View your NFT and track the live updates of your reputation.
 
----
 
 
-```
